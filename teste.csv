@@ -1,0 +1,28 @@
+import pandas as pd
+import random
+from datetime import datetime, timedelta
+
+# Gerar dados fictícios para o log
+log_data = []
+
+# Definir uma data inicial para os logs
+start_date = datetime(2023, 10, 1, 0, 0, 0)
+
+# Gerar 100 entradas de log fictícias
+for i in range(10):
+    timestamp = start_date + timedelta(minutes=i)
+    ip = f"192.168.1.{random.randint(1, 5)}"
+    usuario = f"user{random.randint(1, 5)}"
+    recurso = random.choice(['/login', '/dashboard', '/profile', '/admin'])
+    status = random.choice([200, 404, 403, 500])  # Códigos HTTP comuns
+
+    log_data.append([timestamp, ip, usuario, recurso, status])
+
+# Criar um DataFrame com os dados gerados
+df = pd.DataFrame(log_data, columns=["timestamp", "ip", "usuario", "recurso", "status"])
+
+# Salvar os dados no arquivo CSV
+log_file_path = "log_file.csv"
+df.to_csv(log_file_path, index=False)
+
+print(f"Arquivo de log gerado com sucesso: {log_file_path}")
