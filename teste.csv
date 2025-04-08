@@ -1,0 +1,34 @@
+import pandas as pd
+import os
+from datetime import datetime, timedelta
+
+# Verificar o diretório onde o script está sendo executado
+current_directory = os.getcwd()  # Pega o diretório atual
+print(f"Diretório atual: {current_directory}")
+
+# Dados predefinidos para o log
+log_data = [
+    ["2023-10-01 00:00:00", "192.168.1.1", "user1", "/login", 200],
+    ["2023-10-01 00:01:00", "192.168.1.2", "user2", "/profile", 404],
+    ["2023-10-01 00:02:00", "192.168.1.3", "user3", "/dashboard", 403],
+    ["2023-10-01 00:03:00", "192.168.1.4", "user4", "/admin", 500],
+    ["2023-10-01 00:04:00", "192.168.1.1", "user5", "/login", 200],
+    ["2023-10-01 00:05:00", "192.168.1.2", "user1", "/dashboard", 404],
+    ["2023-10-01 00:06:00", "192.168.1.3", "user2", "/profile", 500],
+    ["2023-10-01 00:07:00", "192.168.1.4", "user3", "/login", 403],
+    ["2023-10-01 00:08:00", "192.168.1.5", "user4", "/admin", 200],
+    ["2023-10-01 00:09:00", "192.168.1.1", "user5", "/login", 404],
+]
+
+# Criar um DataFrame com os dados predefinidos
+df = pd.DataFrame(log_data, columns=["timestamp", "ip", "usuario", "recurso", "status"])
+
+# Salvar os dados no arquivo CSV
+log_file_path = os.path.join(current_directory, "log_file.csv")  # Usando o diretório atual para o caminho do arquivo
+
+# Garantir que o arquivo seja salvo corretamente
+try:
+    df.to_csv(log_file_path, index=False)
+    print(f"Arquivo de log gerado com sucesso: {log_file_path}")
+except Exception as e:
+    print(f"Erro ao salvar o arquivo: {e}")
